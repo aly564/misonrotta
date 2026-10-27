@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import it.unibo.collections.ListsAndMapsImpl;
+import java.util.concurrent.TimeUnit;
 /**
  * Example class using {@link List} and {@link Map}.
  *
@@ -24,13 +24,14 @@ public final class UseListsAndMaps {
     
      
     public static void main() {
+        final int ELEMS = 100_000;
         /*
          * 1) Create a new ArrayList<Integer>, and populate it with the numbers
          * from 1000 (included) to 2000 (excluded).
          */
          List<Integer> lista = new ArrayList<>();
 
-         for(int i = 1000; i <=2000;i++){
+         for(int i = 1000; i <2000;i++){
             Integer e=i;
             lista.add(e);
          }
@@ -64,6 +65,39 @@ public final class UseListsAndMaps {
          * using the previous lists. In order to measure times, use as example
          * TestPerformance.java.
          */
+        long timeLista = System.nanoTime();
+         for(int i = 0; i < ELEMS;i++){
+            Integer e=i;
+            lista.add(e);
+         }
+        timeLista= System.nanoTime()-timeLista;
+        final var millis = TimeUnit.NANOSECONDS.toMillis(timeLista);
+        IO.println(
+            "Converting "
+                + lista.size()
+                + " ints to String and inserting them in a Set took "
+                + timeLista
+                + "ns ("
+                + millis
+                + "ms)"
+        );    
+
+         long timeLista2 = System.nanoTime();
+         for(int i = 0; i < ELEMS;i++){
+            Integer e=i;
+            list.add(e);
+         }
+        timeLista2= System.nanoTime()-timeLista2;
+        final var millis2 = TimeUnit.NANOSECONDS.toMillis(timeLista2);
+        IO.println(
+            "Converting "
+                + list.size()
+                + " ints to String and inserting them in a Set took "
+                + timeLista2
+                + "ns ("
+                + millis2
+                + "ms)"
+        ); 
         /*
          * 6) Measure the performance of reading 1000 times an element whose
          * position is in the middle of the collection for both ArrayList and
