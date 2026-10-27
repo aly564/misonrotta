@@ -25,6 +25,7 @@ public final class UseListsAndMaps {
      
     public static void main() {
         final int ELEMS = 100_000;
+        final int TIMES = 1000;
         /*
          * 1) Create a new ArrayList<Integer>, and populate it with the numbers
          * from 1000 (included) to 2000 (excluded).
@@ -104,6 +105,44 @@ public final class UseListsAndMaps {
          * LinkedList, using the collections of point 5. In order to measure
          * times, use as example TestPerformance.java.
          */
+        timeLista = System.nanoTime();
+
+        int index= lista.size()/2;
+        for(int i = 0; i < TIMES; i++){
+            Integer elem = lista.get(index);
+        }
+        timeLista= System.nanoTime()-timeLista;
+
+        final var millis3 = TimeUnit.NANOSECONDS.toMillis(timeLista);
+        IO.println(
+            "Converting "
+                + lista.size()
+                + " ints to String and inserting them in a Set took "
+                + timeLista
+                + "ns ("
+                + millis3
+                + "ms)"
+        );    
+
+        timeLista = System.nanoTime();
+
+        int index2= list.size()/2;
+        for(int i = 0; i < TIMES; i++){
+            Integer elem = list.get(index2);
+        }
+        
+        timeLista= System.nanoTime()-timeLista;
+
+        final var millis4 = TimeUnit.NANOSECONDS.toMillis(timeLista2);
+        IO.println(
+            "Converting "
+                + list.size()
+                + " ints to String and inserting them in a Set took "
+                + timeLista
+                + "ns ("
+                + millis4
+                + "ms)"
+        ); 
         /*
          * 7) Build a new Map that associates to each continent's name its
          * population:
@@ -120,6 +159,7 @@ public final class UseListsAndMaps {
          *
          * Oceania -> 38,304,000
          */
+        
         /*
          * 8) Compute the population of the world
          */
