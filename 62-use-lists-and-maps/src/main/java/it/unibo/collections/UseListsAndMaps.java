@@ -1,7 +1,9 @@
 package it.unibo.collections;
-
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -69,7 +71,7 @@ public final class UseListsAndMaps {
         long timeLista = System.nanoTime();
          for(int i = 0; i < ELEMS;i++){
             Integer e=i;
-            lista.add(e);
+            lista.add(0,e);
          }
         timeLista= System.nanoTime()-timeLista;
         final var millis = TimeUnit.NANOSECONDS.toMillis(timeLista);
@@ -86,7 +88,7 @@ public final class UseListsAndMaps {
          long timeLista2 = System.nanoTime();
          for(int i = 0; i < ELEMS;i++){
             Integer e=i;
-            list.add(e);
+            list.add(0,e);
          }
         timeLista2= System.nanoTime()-timeLista2;
         final var millis2 = TimeUnit.NANOSECONDS.toMillis(timeLista2);
@@ -133,7 +135,7 @@ public final class UseListsAndMaps {
         
         timeLista= System.nanoTime()-timeLista;
 
-        final var millis4 = TimeUnit.NANOSECONDS.toMillis(timeLista2);
+        final var millis4 = TimeUnit.NANOSECONDS.toMillis(timeLista);
         IO.println(
             "Converting "
                 + list.size()
@@ -159,9 +161,20 @@ public final class UseListsAndMaps {
          *
          * Oceania -> 38,304,000
          */
-        
+        Map<String, BigInteger> map = new HashMap<>();
+        map.put("Africa",BigInteger.valueOf(1110635000));
+        map.put("Americas",BigInteger.valueOf(972005000));
+        map.put("Antartica",BigInteger.valueOf(0));
+        map.put("Asia",BigInteger.valueOf(4298723000L));
+        map.put("Europe",BigInteger.valueOf(743452000));
+        map.put("Oceania",BigInteger.valueOf(38304000));
         /*
          * 8) Compute the population of the world
          */
+        BigInteger population= BigInteger.ZERO;
+        for(final String s : map.keySet()){
+            population = population.add(map.get(s));
+        }
+        IO.println("the world population is "+population);
     }
 }
