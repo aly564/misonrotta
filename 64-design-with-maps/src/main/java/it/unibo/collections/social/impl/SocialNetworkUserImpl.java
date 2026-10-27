@@ -38,7 +38,7 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      *
      * think of what type of keys and values would best suit the requirements
      */
-
+    Map<String,Set<U>> groups = new HashMap<>();
     /*
      * [CONSTRUCTORS]
      *
@@ -64,13 +64,15 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      *            application
      */
     public SocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
-        super(null, null, null, 0);
+        super(name, surname, user, userAge);
     }
 
     /*
      * 2) Define a further constructor where the age defaults to -1
      */
-
+    public SocialNetworkUserImpl(final String name, final String surname, final String user) {
+        super(name, surname, user, -1);
+    }
     /*
      * [METHODS]
      *
@@ -78,7 +80,21 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public boolean addFollowedUser(final String circle, final U user) {
+        if(!groups.containsKey(circle)){
+
+            Set<U> users = new HashSet<>();
+            groups.put(circle, users);
+        }
+
+        if(!groups.get(circle).contains(user)){
+
+            groups.get(circle).add(user);
+            return true;
+
+        }
+        
         return false;
+
     }
 
     /**
@@ -88,11 +104,26 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public Collection<U> getFollowedUsersInGroup(final String groupName) {
-        return null;
+
+        Collection<U> coll = new ArrayList<>();
+        if(groups.containsKey(groupName)){
+
+            coll.addAll(groups.get(groupName));
+        }
+
+        return coll;
     }
 
     @Override
     public List<U> getFollowedUsers() {
-        return null;
+
+        Set<U> coll = new HashSet<>();
+
+        for(String s : groups.keySet()){
+
+           coll.addAll(groups.get(s));
+        }
+
+        return new ArrayList<>(coll);
     }
 }
