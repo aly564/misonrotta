@@ -27,7 +27,8 @@ public final class UseGraph {
         /*
          * Test your graph implementation(s) by calling testGraph
          */
-        testGraph(null);
+        Graph<String> myGraph = new GraphImpl<>();
+        testGraph(myGraph);
     }
 
     private static void testGraph(final Graph<String> graph) {
